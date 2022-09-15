@@ -230,62 +230,14 @@ resource "aws_elasticsearch_domain" "es_server" {
 }
 
 
-resource "aws_iam_user" "s3user" {
-  name  = "${var.cluster_name}-s3user"
-  count = var.app_instance_count > 1 ? 1 : 0
-}
-
 resource "aws_iam_access_key" "s3key" {
-  user  = aws_iam_user.s3user[0].name
-  count = var.app_instance_count > 1 ? 1 : 0
+  user  = ""
+  count = 0
 }
 
 resource "aws_s3_bucket" "s3bucket" {
-  bucket = "${var.cluster_name}.s3bucket"
-  acl    = "private"
-  count  = var.app_instance_count > 1 ? 1 : 0
-  tags = {
-    Name = "${var.cluster_name}-s3bucket"
-  }
-
-  force_destroy = true
-}
-
-resource "aws_iam_user_policy" "s3userpolicy" {
-  name  = "${var.cluster_name}-s3userpolicy"
-  user  = aws_iam_user.s3user[0].name
-  count = var.app_instance_count > 1 ? 1 : 0
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-      {
-          "Effect": "Allow",
-          "Action": [
-              "s3:ListBucket",
-              "s3:ListBucketMultiPartUploads",
-              "s3:DeleteBucket",
-              "s3:GetBucketLocation"
-          ],
-          "Resource": "arn:aws:s3:::${aws_s3_bucket.s3bucket[0].id}"
-      },
-      {
-          "Action": [
-              "s3:AbortMultipartUpload",
-              "s3:ListMultipartUploadParts",
-              "s3:DeleteObject",
-              "s3:GetObject",
-              "s3:GetObjectAcl",
-              "s3:PutObject",
-              "s3:PutObjectAcl"
-          ],
-          "Effect": "Allow",
-          "Resource": "arn:aws:s3:::${aws_s3_bucket.s3bucket[0].id}/*"
-      }
-  ]
-}
-EOF
+  bucket = ""
+  count = 0
 }
 
 resource "aws_rds_cluster" "db_cluster" {
