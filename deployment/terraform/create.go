@@ -234,7 +234,7 @@ func (t *Terraform) Create(initData bool) error {
 			siteURL = "http://" + t.config.SiteURL
 		// SiteURL defined, single app node: we use SiteURL plus the port, since SiteURL points to the app node (which is listening in 8065)
 		case t.config.SiteURL != "":
-			siteURL = "http://" + t.config.SiteURL + ":8065"
+			siteURL = "https://" + t.config.SiteURL
 		// SiteURL not defined, multiple app nodes: we use the proxy's public DNS
 		case t.output.HasProxy():
 			// This case will only succeed if siteURL is empty.
