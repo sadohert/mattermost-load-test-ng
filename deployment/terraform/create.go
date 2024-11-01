@@ -243,7 +243,7 @@ func (t *Terraform) Create(initData bool) error {
 			siteURL = "http://" + t.output.Proxies[0].PrivateDNS
 		// SiteURL not defined, single app node: we use the app node's public DNS plus port
 		default:
-			siteURL = "http://" + t.output.Instances[0].PrivateDNS + ":8065"
+			siteURL = "https://" + t.config.ServerURL
 		}
 
 		// Updating the config.json for each instance of app server
